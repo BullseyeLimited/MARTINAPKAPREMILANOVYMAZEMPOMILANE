@@ -1,0 +1,9 @@
+node_modules/
+.vercel/
+.DS_Store
+# raw scraping + intermediate pipeline artifacts (not needed at runtime)
+page18.html
+boot.js
+data/tagging/
+data/verify/
+data/hooks/

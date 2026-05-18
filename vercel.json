@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/recommend.js": { "maxDuration": 60, "includeFiles": "data/ai_catalog.json" }
+  },
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/data/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=600" }]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "aiweek-live",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI WEEK 2026 live agenda + AI concierge",
+  "engines": { "node": ">=18" }
+}
