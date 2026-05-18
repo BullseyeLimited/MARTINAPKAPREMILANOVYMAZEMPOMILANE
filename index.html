@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#05060f" />
-<title>AI WEEK 2026 — Live Agenda</title>
+<title>AI WEEK 2026 Live Agenda</title>
 <link rel="preconnect" href="https://cdn-assets.inwink.com" />
 <style>
   :root{
@@ -86,7 +86,12 @@
   .askhero::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(124,92,255,.45),transparent 70%)}
   .askhero h3{font-size:18px;font-weight:800;margin-bottom:5px}
   .askhero p{color:var(--mut);font-size:13px;line-height:1.5;max-width:80%}
-  .askhero .go{display:inline-flex;align-items:center;gap:7px;margin-top:12px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#fff;font-weight:800;font-size:14px;padding:10px 16px;border-radius:999px}
+  .askhero .go{display:inline-flex;align-items:center;gap:7px;margin-top:14px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#fff;font-weight:800;font-size:14px;padding:11px 18px;border-radius:999px;cursor:pointer}
+  .askhero .qask{display:flex;gap:8px;margin-top:12px;position:relative;z-index:1}
+  .askhero .qask input{flex:1;min-width:0;background:rgba(5,6,15,.55);border:1px solid #3a3570;border-radius:12px;color:var(--txt);font-size:13.5px;padding:12px 13px;outline:none}
+  .askhero .qask input::placeholder{color:#8b8fc0}
+  .askhero .qask button{flex-shrink:0;background:var(--card2);border:1px solid #3a3570;color:#fff;font-weight:800;font-size:13px;padding:0 16px;border-radius:12px;cursor:pointer}
+  .askhero .qhint{color:#8b8fc0;font-size:11.5px;margin-top:10px;line-height:1.5;position:relative;z-index:1}
 
   .ov{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);z-index:100;opacity:0;pointer-events:none;transition:.22s}
   .ov.on{opacity:1;pointer-events:auto}
@@ -147,6 +152,60 @@
   .jump{position:fixed;right:16px;bottom:90px;z-index:60;background:var(--acc);color:#fff;border:0;border-radius:999px;padding:11px 16px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(124,92,255,.45);display:none;align-items:center;gap:6px}
   .toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:120;background:var(--card2);border:1px solid var(--acc);color:var(--txt);padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
   .toast.on{opacity:1;bottom:114px}
+
+  /* ===== Desktop / PC layout ===== */
+  @media (min-width:900px){
+    :root{ --maxw:1180px; }
+    body{ padding-bottom:0; }
+    .hrow{ padding:18px 0 12px; }
+    .brand{ font-size:22px; }
+    .clock{ font-size:14px; padding:8px 14px; }
+    .search{ padding:13px 18px; }
+    .search input{ font-size:16px; }
+    /* card grid */
+    #main{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 18px; align-items:start; padding-top:6px; }
+    #main>.sec, #main>.aisum, #main>.askhero, #main>.actrow, #main>.empty, #main>#nowline{ grid-column:1 / -1; }
+    .card,.reco{ margin-bottom:16px; }
+    .card:hover,.reco:hover{ border-color:var(--acc); transform:translateY(-2px); }
+    .askhero{ padding:26px 30px; }
+    .askhero p{ max-width:62%; font-size:14px; }
+    .chip{ cursor:pointer; }
+    .chip:hover{ border-color:var(--acc); }
+    /* footer nav -> centered floating bar */
+    .nav{ left:50%; right:auto; transform:translateX(-50%); bottom:18px; max-width:560px; border:1px solid var(--line); border-radius:18px; padding:10px 8px; box-shadow:0 12px 40px rgba(0,0,0,.5); }
+    .nav button{ flex-direction:row; gap:8px; font-size:13px; padding:8px 14px; border-radius:12px; }
+    .nav button:hover{ color:var(--txt); }
+    .nav svg{ width:18px;height:18px; }
+    .nav button.ai .ic{ width:34px;height:26px;margin:0; }
+    main.wrap{ padding-bottom:120px; }
+    /* sheets -> centered modal */
+    .ov{ background:rgba(0,0,0,.7); }
+    .sheet{ left:50%; right:auto; bottom:auto; top:50%; width:640px; max-width:92vw;
+      max-height:84vh; border-radius:20px; border:1px solid var(--line);
+      transform:translate(-50%,-44%) scale(.97); opacity:0;
+      transition:transform .26s cubic-bezier(.2,.8,.2,1),opacity .2s; }
+    .sheet.on{ transform:translate(-50%,-50%) scale(1); opacity:1; }
+    .grip{ display:none; }
+    .sbody{ padding:22px 26px 28px; }
+    .fbtn button,.wznav button,.actrow button{ cursor:pointer; }
+  }
+  @media (min-width:1320px){
+    #main{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+  }
+  .legal{ text-align:center; color:var(--dim); font-size:11.5px; padding:26px 12px 10px; line-height:1.6; }
+  .legal a{ color:var(--mut); text-decoration:underline; cursor:pointer; }
+  .privacy-body p{ color:var(--mut); font-size:13.5px; line-height:1.65; margin-bottom:11px; }
+  .privacy-body b{ color:var(--txt); }
+  .cbanner{ position:fixed; left:10px; right:10px; bottom:100px; z-index:90; background:var(--card2);
+    border:1px solid var(--line); border-radius:14px; padding:13px 15px; display:none; gap:12px;
+    align-items:center; font-size:12px; color:var(--mut); line-height:1.5; max-width:760px; margin:0 auto;
+    box-shadow:0 10px 34px rgba(0,0,0,.5); }
+  .cbanner.on{ display:flex; }
+  .cbanner b{ color:var(--txt); }
+  .cbanner a{ color:var(--acc2); text-decoration:underline; cursor:pointer; white-space:nowrap; }
+  .cbanner button{ flex-shrink:0; background:linear-gradient(90deg,var(--acc),var(--acc2)); color:#fff;
+    border:0; border-radius:10px; padding:10px 16px; font-weight:800; font-size:13px; cursor:pointer; }
+  @media (min-width:900px){ .cbanner{ bottom:90px; } }
 </style>
 </head>
 <body>
@@ -161,8 +220,8 @@
     </div>
     <div class="search">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
-      <input id="q" placeholder="Search talks, speakers, companies…" autocomplete="off" />
-      <span class="clr" id="qclr">✕</span>
+      <input id="q" placeholder="Search by name: talk, speaker or company" autocomplete="off" />
+      <span class="clr" id="qclr">clear</span>
     </div>
     <div class="chips" id="chips"></div>
   </div>
@@ -170,7 +229,7 @@
 
 <main class="wrap" id="main"></main>
 
-<button class="jump" id="jump">↓ Jump to now</button>
+<button class="jump" id="jump">Jump to now</button>
 <div class="toast" id="toast"></div>
 
 <nav class="nav">
@@ -183,6 +242,11 @@
   <button data-view="plan" id="nvPlan">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8L6.4 19.6l1-6L3 9.4l6-.9z"/></svg>MY PLAN</button>
 </nav>
+
+<div class="cbanner" id="cbanner">
+  <div>This is an <b>unofficial, community made</b> helper for AI WEEK 2026. No accounts, no cookies, no tracking. Nothing you enter is stored on our servers. <a id="cbMore">Privacy and terms</a></div>
+  <button id="cbOk">Got it</button>
+</div>
 
 <div class="ov" id="ov"></div>
 <div class="sheet" id="sheet"><div class="grip"></div><div class="sbody" id="sbody"></div></div>
@@ -210,6 +274,15 @@ function asLocal(iso){ return new Date(String(iso).replace(/Z$/,"")); }
 function hm(iso){ return asLocal(iso).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}); }
 function initials(n){ return (n||"").split(/\s+/).map(w=>w[0]).filter(Boolean).slice(0,2).join("").toUpperCase(); }
 function esc(s){ return (s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m])); }
+// Safety net: strip emojis and convert dashes so nothing reads AI-generated.
+function clean(s){
+  return (s||"")
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}️‍]/gu,"")
+    .replace(/\s*[—–]\s*/g,", ")
+    .replace(/ - /g,", ")
+    .replace(/\s{2,}/g," ")
+    .trim();
+}
 function spById(id){ return DATA._spById[id]; }
 function sesById(id){ return DATA._seById[id]; }
 function ph(n){ const d=el("div","ph"); d.textContent=initials(n); return d; }
@@ -227,7 +300,7 @@ function cardEl(s,opts={}){
   const stt=status(s), c=el("div","card "+(stt==="live"?"live":stt==="soon"?"soon":""));
   c.onclick=()=>openSession(s);
   const top=el("div","ctop");
-  const tm=el("div","time"); tm.innerHTML=hm(s.start)+' <span class="end">– '+hm(s.end)+'</span>';
+  const tm=el("div","time"); tm.innerHTML=hm(s.start)+' <span class="end">to '+hm(s.end)+'</span>';
   top.appendChild(tm);
   if(opts.showDay){ const d=el("div","badgep");d.style.background="var(--card2)";d.style.color="var(--mut)";
     d.textContent=asLocal(s.start).toLocaleDateString("en-US",{month:"short",day:"numeric"});top.appendChild(d);}
@@ -281,44 +354,66 @@ function render(){
   const list=visible();
   if(view==="now"){
     const hero=el("div","askhero");
-    hero.innerHTML='<h3>Lost in 530+ talks? 🤖</h3><p>Tell the AI concierge who you are — it builds a personal, time-aware route through AI WEEK for you.</p><div class="go">Ask AI ✨</div>';
-    hero.onclick=openWizard; m.appendChild(hero);
+    hero.innerHTML='<h3>Lost in 530+ talks?</h3>'+
+      '<p>Two ways to let AI help. Both know the current time and will not suggest a talk that already ended.</p>'+
+      '<div class="go" id="heroPlan">Build my full plan</div>'+
+      '<div class="qask"><input id="qAsk" placeholder="Or ask a quick question, like: best agentic AI talks this afternoon" autocomplete="off"/><button id="qAskGo">Ask AI</button></div>'+
+      '<div class="qhint">The search bar at the top finds talks and speakers by name. This box asks the AI a question.</div>';
+    m.appendChild(hero);
+    hero.querySelector("#heroPlan").onclick=()=>openWizard();
+    const qi=hero.querySelector("#qAsk"), qg=hero.querySelector("#qAskGo");
+    qg.onclick=()=>quickAsk(qi.value);
+    qi.onkeydown=e=>{ if(e.key==="Enter") quickAsk(qi.value); };
     const live=list.filter(s=>status(s)==="live");
     const soon=list.filter(s=>status(s)==="soon").sort((a,b)=>a.start.localeCompare(b.start));
-    if(!live.length&&!soon.length) m.appendChild(emptyEl(isConfDay()?"Nothing live right now — check Agenda or Ask AI.":"AI WEEK runs May 19–20. Open the agenda or Ask AI to plan.","💤"));
+    if(!live.length&&!soon.length) m.appendChild(emptyEl(isConfDay()?"Nothing live right now. Check the Agenda or use Ask AI.":"AI WEEK runs May 19 and 20. Open the agenda or use Ask AI to plan."));
     if(live.length){ m.appendChild(secEl("Happening now","l",live.length)); live.sort((a,b)=>a.room.localeCompare(b.room)).forEach(s=>m.appendChild(cardEl(s))); }
     if(soon.length){ m.appendChild(secEl("Up next · within 60 min","s",soon.length)); soon.forEach(s=>m.appendChild(cardEl(s))); }
   } else {
-    if(!list.length) m.appendChild(emptyEl("No talks match your filters.","🔍"));
+    if(!list.length) m.appendChild(emptyEl("No talks match your filters."));
     else groupByTime(list,m);
   }
+  appendLegal(m);
 }
 function renderPlan(m){
   if(reco&&reco.picks&&reco.picks.length){
     m.appendChild(secEl("AI picks for you","u",reco.picks.length));
-    if(reco.summary){ const su=el("div","aisum"); su.innerHTML="<b>✨ "+esc(reco.summary)+"</b>"; m.appendChild(su); }
+    if(reco.summary){ const su=el("div","aisum"); su.innerHTML="<b>"+esc(clean(reco.summary))+"</b>"; m.appendChild(su); }
     reco.picks.forEach(p=>{ const s=sesById(p.id); if(!s) return;
       const c=el("div","reco");
-      c.innerHTML='<div class="time" style="margin-bottom:6px">'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"short"})+' '+hm(s.start)+' – '+hm(s.end)+' · <span style="color:var(--acc2)">'+esc(s.room)+'</span></div><div class="ttl">'+esc(s.title)+'</div><div class="why">“'+esc(p.reason||"")+'”</div>';
+      c.innerHTML='<div class="time" style="margin-bottom:6px">'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"short"})+' '+hm(s.start)+' to '+hm(s.end)+' · <span style="color:var(--acc2)">'+esc(s.room)+'</span></div><div class="ttl">'+esc(s.title)+'</div><div class="why">'+esc(clean(p.reason||""))+'</div>';
       c.onclick=()=>openSession(s); m.appendChild(c);
     });
-    if(reco.closing){ const cl=el("div","aisum");cl.style.marginTop="10px";cl.textContent="💡 "+reco.closing;m.appendChild(cl); }
+    if(reco.closing){ const cl=el("div","aisum");cl.style.marginTop="10px";cl.textContent=clean(reco.closing);m.appendChild(cl); }
+    if(reco.generatedAt){ const ts=el("div");ts.style.cssText="color:var(--dim);font-size:11.5px;margin:8px 2px 0";
+      ts.textContent="Generated "+new Date(reco.generatedAt).toLocaleString("en-GB",{timeZone:TZ,hour:"2-digit",minute:"2-digit",day:"numeric",month:"short"})+" · re-analyze to refresh against the current time"; m.appendChild(ts); }
     const re=el("div","actrow");re.style.marginTop="14px";
-    const b1=el("button");b1.innerHTML="🔄 Redo with new answers";b1.onclick=openWizard;
-    const b2=el("button","cal");b2.innerHTML="📅 Add all to calendar";b2.onclick=()=>{reco.picks.forEach(p=>{const s=sesById(p.id);if(s)downloadICS(s);});};
-    re.appendChild(b1);re.appendChild(b2);m.appendChild(re);
+    const b1=el("button");b1.textContent="Update for now";b1.title="Run your saved answers again against the current time";b1.onclick=reAnalyze;
+    const b3=el("button");b3.textContent="Edit answers";b3.onclick=()=>openWizard(true);
+    const b2=el("button","cal");b2.textContent="Add all to calendar";b2.onclick=()=>{reco.picks.forEach(p=>{const s=sesById(p.id);if(s)downloadICS(s);});};
+    re.appendChild(b1);re.appendChild(b3);re.appendChild(b2);m.appendChild(re);
   } else {
-    const hero=el("div","askhero");hero.innerHTML='<h3>No AI plan yet</h3><p>Answer a few quick questions and the concierge will craft your personal AI WEEK route.</p><div class="go">Ask AI ✨</div>';
-    hero.onclick=openWizard;m.appendChild(hero);
+    const hero=el("div","askhero");hero.innerHTML='<h3>No AI plan yet</h3><p>Answer a few quick questions and the concierge will build your personal AI WEEK route.</p><div class="go">Ask AI</div>';
+    hero.onclick=()=>openWizard();m.appendChild(hero);
   }
   const star=DATA.sessions.filter(s=>favs.has(s.id)).sort((a,b)=>a.start.localeCompare(b.start));
   m.appendChild(secEl("Starred & reminders","s",star.length));
-  if(!star.length) m.appendChild(emptyEl("Tap ☆ on any talk to save it and set a reminder.","⭐"));
+  if(!star.length) m.appendChild(emptyEl("Use Save on any talk to keep it here and set a reminder."));
   else star.forEach(s=>m.appendChild(cardEl(s,{showDay:true})));
+  appendLegal(m);
+}
+function appendLegal(m){
+  const d=el("div","legal");
+  d.innerHTML='Unofficial & community-built · not affiliated with or endorsed by AI WEEK / IA Spiegata Semplice. '+
+    'Times and rooms may change, so verify on site. No data is stored on our servers. '+
+    '<a id="lgP">Privacy &amp; terms</a> · <a id="lgC">Clear my data</a>';
+  m.appendChild(d);
+  d.querySelector("#lgP").onclick=openPrivacy;
+  d.querySelector("#lgC").onclick=clearData;
 }
 function isConfDay(){ return DATA.days.includes(romeYMD()); }
 function secEl(t,c,n){ const s=el("div","sec");s.innerHTML='<span class="dot '+c+'"></span><h2>'+t+'</h2><span class="cnt">'+n+'</span>';return s; }
-function emptyEl(t,e){ const d=el("div","empty");d.innerHTML='<div style="font-size:34px;margin-bottom:10px">'+e+'</div>'+t;return d; }
+function emptyEl(t){ const d=el("div","empty");d.textContent=t;return d; }
 function groupByTime(arr,m){
   arr=arr.slice().sort((a,b)=>a.start.localeCompare(b.start));
   let cur="",nowMarked=false; const now=romeNow();
@@ -338,12 +433,12 @@ function buildChips(){
     b.textContent=new Date(d+"T12:00:00").toLocaleDateString("en-US",{weekday:"short",day:"numeric",month:"short"});
     b.onclick=()=>{day=d;buildChips();render();};c.appendChild(b); });
   const ft=el("div","chip flt"+(fTag.size?" has":""));
-  ft.innerHTML='⚡ Topics'+(fTag.size?' <span class="badge">'+fTag.size+'</span>':'');
+  ft.innerHTML='Topics'+(fTag.size?' <span class="badge">'+fTag.size+'</span>':'');
   ft.onclick=()=>openFilter("tag");c.appendChild(ft);
   const fr=el("div","chip flt"+(fRoom.size?" has":""));
-  fr.innerHTML='📍 Stage'+(fRoom.size?' <span class="badge">'+fRoom.size+'</span>':'');
+  fr.innerHTML='Stage'+(fRoom.size?' <span class="badge">'+fRoom.size+'</span>':'');
   fr.onclick=()=>openFilter("room");c.appendChild(fr);
-  if(fTag.size||fRoom.size||q){ const cl=el("div","chip");cl.innerHTML='✕ Clear';
+  if(fTag.size||fRoom.size||q){ const cl=el("div","chip");cl.textContent='Clear all';
     cl.onclick=()=>{fTag.clear();fRoom.clear();q="";$("#q").value="";$("#qclr").style.display="none";buildChips();render();};c.appendChild(cl);}
 }
 
@@ -356,12 +451,12 @@ function openSession(s){
   let h='';
   if(s.tags&&s.tags.length) h+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">'+s.tags.map(t=>'<span class="tag">'+esc(t)+'</span>').join('')+'</div>';
   h+='<h3>'+esc(s.title)+'</h3>';
-  h+='<div class="smeta"><div class="m">🕐 <b>'+hm(s.start)+' – '+hm(s.end)+'</b></div><div class="m">📍 <b>'+esc(s.room||"TBA")+'</b></div><div class="m">'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"long",day:"numeric",month:"long"})+'</div></div>';
+  h+='<div class="smeta"><div class="m"><b>'+hm(s.start)+' to '+hm(s.end)+'</b></div><div class="m"><b>'+esc(s.room||"TBA")+'</b></div><div class="m">'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"long",day:"numeric",month:"long"})+'</div></div>';
   h+='<div class="actrow">'+
-     '<button class="star'+(star?" on":"")+'" id="bStar">'+(star?"★ Saved":"☆ Save")+'</button>'+
-     '<button class="star'+(rem?" on":"")+'" id="bRem">'+(rem?"🔔 Reminder on":"🔔 Remind me")+'</button>'+
-     '<button class="cal" id="bCal">📅 Add to calendar</button></div>';
-  if(s.hook) h+='<div class="aisum" style="margin-bottom:14px">✨ '+esc(s.hook)+(s.ideal?'<br><span style="color:var(--dim);font-size:12px">Ideal for: '+esc(s.ideal)+'</span>':'')+'</div>';
+     '<button class="star'+(star?" on":"")+'" id="bStar">'+(star?"Saved":"Save")+'</button>'+
+     '<button class="star'+(rem?" on":"")+'" id="bRem">'+(rem?"Reminder on":"Remind me")+'</button>'+
+     '<button class="cal" id="bCal">Add to calendar</button></div>';
+  if(s.hook) h+='<div class="aisum" style="margin-bottom:14px">'+esc(clean(s.hook))+(s.ideal?'<br><span style="color:var(--dim);font-size:12px">Good for: '+esc(clean(s.ideal))+'</span>':'')+'</div>';
   if(s.desc) h+='<div class="sdesc">'+esc(s.desc)+'</div>';
   if(s.speakerIds.length){
     h+='<div class="shead">Speakers ('+s.speakerIds.length+')</div>';
@@ -382,7 +477,7 @@ function toggle(set,key,id){ set.has(id)?set.delete(id):set.add(id); localStorag
 function toggleReminder(s){
   if(reminders.has(s.id)){ reminders.delete(s.id); toast("Reminder removed"); }
   else { reminders.add(s.id); if("Notification"in window&&Notification.permission==="default")Notification.requestPermission();
-    toast("Reminder set — we'll ping you ~10 min before"); }
+    toast("Reminder set. We will alert you about 10 minutes before."); }
   localStorage.setItem("aiw_rem",JSON.stringify([...reminders]));
 }
 
@@ -397,7 +492,7 @@ function buildICS(s){
     "UID:"+s.id+"@aiweek","DTSTAMP:"+icsDate(romeNow().toISOString()),
     "DTSTART:"+icsDate(s.start),"DTEND:"+icsDate(s.end),
     "SUMMARY:"+(s.title||"").replace(/[,;\\]/g,"\\$&"),
-    "LOCATION:"+(s.room+" — Milano Fiera Rho").replace(/[,;\\]/g,"\\$&"),
+    "LOCATION:"+(s.room+", Milano Fiera Rho").replace(/[,;\\]/g,"\\$&"),
     "DESCRIPTION:"+((sp?"Speakers: "+sp+". ":"")+(s.hook||"")).replace(/[,;\\]/g,"\\$&").slice(0,300),
     "BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:Upcoming: "+(s.title||"").slice(0,60),"END:VALARM",
     "END:VEVENT","END:VCALENDAR"].join("\r\n");
@@ -417,18 +512,18 @@ function outlookUrl(s){
   const iso=i=>new Date(String(i).replace(/Z$/,"")+"+02:00").toISOString();
   return "https://outlook.office.com/calendar/0/deeplink/compose?subject="+encodeURIComponent(s.title)+
     "&startdt="+iso(s.start)+"&enddt="+iso(s.end)+"&location="+encodeURIComponent(s.room+", Milano Fiera Rho")+
-    "&body="+encodeURIComponent((s.hook||"")+" — AI WEEK 2026")+"&path=/calendar/action/compose";
+    "&body="+encodeURIComponent((s.hook||"")+" AI WEEK 2026")+"&path=/calendar/action/compose";
 }
 function showCalendar(s){
-  let h='<h3>Add to calendar</h3><p style="color:var(--mut);font-size:13.5px;margin:6px 0 18px;line-height:1.5">'+esc(s.title)+'<br>'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"short",day:"numeric",month:"short"})+' · '+hm(s.start)+'–'+hm(s.end)+'. A 15-min alert is included.</p>';
+  let h='<h3>Add to calendar</h3><p style="color:var(--mut);font-size:13.5px;margin:6px 0 18px;line-height:1.5">'+esc(s.title)+'<br>'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"short",day:"numeric",month:"short"})+' · '+hm(s.start)+' to '+hm(s.end)+'. A 15 minute alert is included.</p>';
   h+='<div class="actrow" style="flex-direction:column">'+
-     '<button class="cal" id="cG">📆 Google Calendar</button>'+
-     '<button id="cO">📧 Outlook / Microsoft</button>'+
-     '<button id="cA">🍎 Apple / .ics download</button></div>';
+     '<button class="cal" id="cG">Google Calendar</button>'+
+     '<button id="cO">Outlook or Microsoft</button>'+
+     '<button id="cA">Apple or .ics download</button></div>';
   showSheet(h);
   $("#cG").onclick=()=>window.open(gcalUrl(s),"_blank");
   $("#cO").onclick=()=>window.open(outlookUrl(s),"_blank");
-  $("#cA").onclick=()=>{ downloadICS(s); toast("Calendar file downloaded — open it to add (Apple/any)"); };
+  $("#cA").onclick=()=>{ downloadICS(s); toast("Calendar file downloaded. Open it to add to any calendar app."); };
 }
 
 function openFilter(kind){
@@ -448,17 +543,19 @@ function openFilter(kind){
 const ROLES=["Founder / CEO","Executive / Manager","Engineer / Developer","Researcher / Academic","Marketing / Sales","Investor / VC","Consultant","Student","Other"];
 const LEVELS=[["any","Mix of everything"],["intro","Beginner-friendly"],["intermediate","Practical / intermediate"],["advanced","Deep / advanced"]];
 let WZ={profile:"",role:"",interests:new Set(),level:"any",days:[],notes:"",step:0};
-function openWizard(){
-  WZ={profile:"",role:"",interests:new Set(),level:"any",
-      days:[ romeYMD()>DATA.days[0]&&DATA.days.includes(romeYMD())?romeYMD():DATA.days[DATA.days.includes(romeYMD())?DATA.days.indexOf(romeYMD()):0]||DATA.days[0] ],
-      notes:"",step:0};
+function defaultDay(){ return DATA.days.includes(romeYMD())?romeYMD():DATA.days[0]; }
+function openWizard(prefill){
+  const a = prefill ? JSON.parse(localStorage.getItem("aiw_ans")||"null") : null;
+  WZ = a ? {profile:a.profile||"",role:a.role||"",interests:new Set(a.interests||[]),
+            level:a.level||"any",days:(a.days&&a.days.length?a.days:[defaultDay()]),notes:a.notes||"",step:0}
+         : {profile:"",role:"",interests:new Set(),level:"any",days:[defaultDay()],notes:"",step:0};
   renderWizard();
 }
 function renderWizard(){
   const steps=5, i=WZ.step;
   let body='<div class="wzprog">'+Array.from({length:steps},(_,k)=>'<i class="'+(k<=i?"on":"")+'"></i>').join('')+'</div><div class="wz">';
   // step 0 profile
-  body+='<div class="step'+(i===0?" on":"")+'"><div class="wzq">Who are you?</div><div class="wzs">One sentence — the AI tailors everything to this.</div><textarea id="wzP" rows="3" placeholder="e.g. I run a 20-person logistics startup and want to automate ops with AI agents">'+esc(WZ.profile)+'</textarea></div>';
+  body+='<div class="step'+(i===0?" on":"")+'"><div class="wzq">Who are you?</div><div class="wzs">One sentence. The AI tailors everything to this.</div><textarea id="wzP" rows="3" placeholder="e.g. I run a 20-person logistics startup and want to automate ops with AI agents">'+esc(WZ.profile)+'</textarea></div>';
   // step 1 role
   body+='<div class="step'+(i===1?" on":"")+'"><div class="wzq">Your role</div><div class="wzs">Pick the closest.</div><div class="fopt">'+ROLES.map(r=>'<div class="o'+(WZ.role===r?" on":"")+'" data-r="'+esc(r)+'">'+esc(r)+'</div>').join('')+'</div></div>';
   // step 2 interests
@@ -466,14 +563,15 @@ function renderWizard(){
   // step 3 level + days
   body+='<div class="step'+(i===3?" on":"")+'"><div class="wzq">Depth & days</div><div class="wzs">How deep, and which days you\'ll be at Milano Fiera Rho.</div><div class="fopt">'+LEVELS.map(l=>'<div class="o'+(WZ.level===l[0]?" on":"")+'" data-l="'+l[0]+'">'+l[1]+'</div>').join('')+'</div><div style="height:10px"></div><div class="fopt">'+DATA.days.map(d=>'<div class="o'+(WZ.days.includes(d)?" on":"")+'" data-d="'+d+'">'+new Date(d+"T12:00:00").toLocaleDateString("en-US",{weekday:"short",day:"numeric",month:"short"})+'</div>').join('')+'</div></div>';
   // step 4 notes
-  body+='<div class="step'+(i===4?" on":"")+'"><div class="wzq">Anything else?</div><div class="wzs">Optional — goals, what to avoid, who you want to meet. The more, the sharper the picks.</div><textarea id="wzN" rows="4" placeholder="e.g. Skip pure-sales pitches. Most interested in production RAG, EU AI Act, and meeting healthcare founders.">'+esc(WZ.notes)+'</textarea></div>';
-  body+='</div><div class="wznav">'+(i>0?'<button class="bk" id="wzB">Back</button>':'')+'<button class="nx" id="wzN2">'+(i===steps-1?"✨ Get my plan":"Continue")+'</button></div>';
+  body+='<div class="step'+(i===4?" on":"")+'"><div class="wzq">Anything else?</div><div class="wzs">Optional. Goals, what to avoid, who you want to meet. The more you give, the sharper the picks.</div><textarea id="wzN" rows="4" placeholder="e.g. Skip pure sales pitches. Most interested in production RAG, the EU AI Act, and meeting healthcare founders.">'+esc(WZ.notes)+'</textarea><div style="color:var(--dim);font-size:11.5px;margin-top:12px;line-height:1.55">When you continue, your answers are sent once to our AI provider to generate suggestions. They are <b style="color:var(--mut)">not stored</b> on our servers and no account is created. <a style="color:var(--acc2);text-decoration:underline;cursor:pointer" id="wzPriv">Privacy and terms</a></div></div>';
+  body+='</div><div class="wznav">'+(i>0?'<button class="bk" id="wzB">Back</button>':'')+'<button class="nx" id="wzN2">'+(i===steps-1?"Get my plan":"Continue")+'</button></div>';
   showSheet(body,"");
   const sb=$("#sbody");
   sb.querySelectorAll('[data-r]').forEach(o=>o.onclick=()=>{WZ.role=o.dataset.r;sb.querySelectorAll('[data-r]').forEach(x=>x.classList.toggle("on",x===o));});
   sb.querySelectorAll('[data-t]').forEach(o=>o.onclick=()=>{const t=o.dataset.t;WZ.interests.has(t)?WZ.interests.delete(t):WZ.interests.add(t);o.classList.toggle("on");});
   sb.querySelectorAll('[data-l]').forEach(o=>o.onclick=()=>{WZ.level=o.dataset.l;sb.querySelectorAll('[data-l]').forEach(x=>x.classList.toggle("on",x===o));});
   sb.querySelectorAll('[data-d]').forEach(o=>o.onclick=()=>{const d=o.dataset.d;WZ.days.includes(d)?WZ.days=WZ.days.filter(x=>x!==d):WZ.days.push(d);o.classList.toggle("on");});
+  if($("#wzPriv")) $("#wzPriv").onclick=openPrivacy;
   if($("#wzB")) $("#wzB").onclick=()=>{ saveStep(); WZ.step--; renderWizard(); };
   $("#wzN2").onclick=()=>{ saveStep();
     if(WZ.step<steps-1){ WZ.step++; renderWizard(); }
@@ -482,20 +580,66 @@ function renderWizard(){
 }
 function saveStep(){ const p=$("#wzP"),n=$("#wzN"); if(p)WZ.profile=p.value.trim(); if(n)WZ.notes=n.value.trim(); }
 function runAI(){
-  showSheet('<div style="text-align:center;padding:46px 10px"><div class="spin" style="margin:0 auto 20px"></div><div style="font-weight:800;font-size:18px;margin-bottom:8px">Building your AI WEEK route…</div><div style="color:var(--mut);font-size:13.5px;line-height:1.6">Reading 530+ sessions, filtering out anything that already ended, and matching to your profile.</div></div>');
+  const ans={ profile:WZ.profile, role:WZ.role, interests:[...WZ.interests],
+    level:WZ.level, days:WZ.days.length?WZ.days:DATA.days, notes:WZ.notes };
+  callAI(ans,"Building your personal AI WEEK route","Reading 530+ sessions, dropping anything that already ended, and matching to your profile.",()=>renderWizard());
+}
+function reAnalyze(){
+  const ans=JSON.parse(localStorage.getItem("aiw_ans")||"null");
+  if(!ans){ openWizard(); return; }
+  callAI(ans,"Updating for the current time","Running your saved answers again so nothing recommended has already passed.",reAnalyze);
+}
+function quickAsk(query){
+  query=(query||"").trim(); if(!query){ toast("Type what you're looking for first"); return; }
+  const ans={ profile:query, role:"", interests:[], level:"any", days:DATA.days, notes:query };
+  callAI(ans,"Searching with AI","Reading the full programme and finding upcoming talks that match your question.",()=>{ view="now"; render(); });
+}
+function callAI(ans,title,sub,retryFn){
+  localStorage.setItem("aiw_ans",JSON.stringify(ans));
+  showSheet('<div style="text-align:center;padding:46px 10px"><div class="spin" style="margin:0 auto 20px"></div><div style="font-weight:800;font-size:18px;margin-bottom:8px">'+esc(title)+'</div><div style="color:var(--mut);font-size:13.5px;line-height:1.6">'+esc(sub)+'</div><div style="color:var(--dim);font-size:12px;margin-top:14px">This can take 15 to 25 seconds while the AI reasons carefully.</div></div>');
   fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({ profile:WZ.profile, role:WZ.role, interests:[...WZ.interests],
-      level:WZ.level, days:WZ.days.length?WZ.days:DATA.days, notes:WZ.notes,
-      nowOverride:_fakeISO||"" })
+    body:JSON.stringify(Object.assign({},ans,{nowOverride:_fakeISO||""}))
   }).then(r=>r.json()).then(d=>{
-    if(d.error){ showSheet('<h3>Hmm, the AI hit a snag</h3><div class="sdesc">'+esc(JSON.stringify(d.detail||d.error)).slice(0,400)+'</div><div class="fbtn"><button class="ok" id="rt">Try again</button></div>'); $("#rt").onclick=runAI; return; }
-    if(!d.picks||!d.picks.length){ showSheet('<h3>No good matches right now</h3><div class="sdesc">'+esc(d.summary||"Everything for the chosen day may have ended. Try the other day or broaden your topics.")+'</div><div class="fbtn"><button class="ok" id="rt">Adjust answers</button></div>'); $("#rt").onclick=openWizard; return; }
+    if(d.error){ showSheet('<h3>The AI is busy</h3><div class="sdesc">'+esc(d.error)+'</div><div class="fbtn"><button class="ok" id="rt">Try again</button></div>'); $("#rt").onclick=()=>retryFn(); return; }
+    if(!d.picks||!d.picks.length){ showSheet('<h3>No upcoming matches</h3><div class="sdesc">'+esc(d.summary||"Everything matching may have ended for today. Try the other day or broaden your request.")+'</div><div class="fbtn"><button class="ok" id="rt">Adjust</button></div>'); $("#rt").onclick=()=>retryFn(); return; }
     reco={summary:d.summary,closing:d.closing,picks:d.picks,generatedAt:Date.now()};
     localStorage.setItem("aiw_reco",JSON.stringify(reco));
     closeSheet(); view="plan";
     document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("on",x.id==="nvPlan"));
-    render(); window.scrollTo({top:0}); toast("Your personal plan is ready 🎯");
-  }).catch(e=>{ showSheet('<h3>Connection problem</h3><div class="sdesc">Could not reach the AI service. Check connection and retry.<br><br>'+esc(String(e))+'</div><div class="fbtn"><button class="ok" id="rt">Retry</button></div>'); $("#rt").onclick=runAI; });
+    render(); window.scrollTo({top:0}); toast("Your AI picks are ready");
+  }).catch(e=>{ showSheet('<h3>Connection problem</h3><div class="sdesc">Could not reach the AI service. Check your connection and try again.</div><div class="fbtn"><button class="ok" id="rt">Retry</button></div>'); $("#rt").onclick=()=>retryFn(); });
+}
+
+/* ---- privacy / legal / consent ---- */
+function openPrivacy(){
+  const h='<h3>Privacy and terms</h3><div class="privacy-body">'+
+   '<p><b>What this is.</b> A free, community made helper for navigating AI WEEK 2026. It is not the official app and is not affiliated with, authorised by, or endorsed by AI WEEK or IA Spiegata Semplice. Session names, times and speaker details belong to the organisers and are shown for convenience only.</p>'+
+   '<p><b>No account, no tracking.</b> There is no sign up and no login. We do not use cookies. We do not run analytics, advertising or third party trackers. We do not build a profile of you.</p>'+
+   '<p><b>What stays on your device.</b> Your saved talks, reminders and AI results are stored only in your own browser (local storage) so the page remembers them. They never leave your device except as described next, and you can wipe them any time with "Clear my data" below.</p>'+
+   '<p><b>When you use Ask AI.</b> The text you type in the form or the quick question, plus your selected topics, is sent one time to our AI provider (Cerebras, which runs the GLM model) purely to generate suggestions for you. We do not save that text on any server of ours, and no database receives it. We do not ask for your name, email or any identifying information, so please do not type personal data into the boxes.</p>'+
+   '<p><b>Legal basis (EU/GDPR).</b> Processing happens only when you choose to press Ask AI, on the basis of your request and consent, and only to give you the answer you asked for. No personal data is required to use the app. As no account or contact detail is collected, requests are not linked to an identity.</p>'+
+   '<p><b>Accuracy.</b> Times, rooms and speakers can change. Always confirm on the official AI WEEK channels before walking to a session. Suggestions are generated automatically and may be imperfect; use your own judgement.</p>'+
+   '<p><b>No warranty.</b> The app is provided as is, without warranty of any kind, and the maker is not liable for any loss arising from its use or from any schedule change.</p>'+
+   '<p><b>Contact.</b> Questions or a takedown request: reach the operator who shared this link.</p>'+
+   '<p style="color:var(--dim);font-size:12px">Last updated 19 May 2026.</p>'+
+   '</div><div class="fbtn"><button class="clr" id="pvClr">Clear my data</button><button class="ok" id="pvOk">Close</button></div>';
+  showSheet(h,"");
+  $("#pvOk").onclick=closeSheet;
+  $("#pvClr").onclick=clearData;
+}
+function clearData(){
+  ["aiw_fav","aiw_rem","aiw_reco","aiw_ans","aiw_consent"].forEach(k=>localStorage.removeItem(k));
+  favs=new Set(); reminders=new Set(); reco=null;
+  closeSheet(); view="now";
+  document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("on",x.id==="nvNow"));
+  render(); toast("All local data cleared from this device");
+}
+function initConsent(){
+  const b=$("#cbanner");
+  if(localStorage.getItem("aiw_consent")==="1"){ b.classList.remove("on"); return; }
+  b.classList.add("on");
+  $("#cbOk").onclick=()=>{ localStorage.setItem("aiw_consent","1"); b.classList.remove("on"); };
+  $("#cbMore").onclick=openPrivacy;
 }
 
 /* ---- nav / search / clock / reminders ---- */
@@ -504,7 +648,7 @@ document.querySelectorAll(".nav button[data-view]").forEach(b=>b.onclick=()=>{
   document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("on",x===b));
   render(); window.scrollTo({top:0});
 });
-$("#nvAsk").onclick=openWizard;
+$("#nvAsk").onclick=()=>openWizard();
 $("#q").oninput=e=>{ q=e.target.value.trim(); $("#qclr").style.display=q?"block":"none";
   if(q&&(view==="now"||view==="plan")){view="all";document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("on",x.id==="nvAll"));}
   buildChips(); render(); };
@@ -522,8 +666,8 @@ function checkReminders(){
     if(mins>0&&mins<=10){ notified.add(id);
       const msg=s.title+" starts in "+Math.round(mins)+" min · "+s.room;
       if("Notification"in window&&Notification.permission==="granted")
-        new Notification("⏰ AI WEEK reminder",{body:msg});
-      else toast("⏰ "+msg);
+        new Notification("AI WEEK reminder",{body:msg});
+      else toast(msg);
     }
   });
 }
@@ -539,7 +683,7 @@ fetch("data/aiweek.json").then(r=>r.json()).then(d=>{
   const today=romeYMD();
   day=d.days.includes(today)?today:d.days[0];
   $("#splash").remove();
-  buildChips(); tickClock(); render();
+  buildChips(); tickClock(); render(); initConsent();
   setInterval(()=>{ tickClock(); checkReminders(); if(view==="now")render(); },30000);
 }).catch(e=>{ $("#splash").innerHTML='<div class="lg">Failed to load data</div><div style="color:var(--mut);font-size:13px;padding:0 20px;text-align:center">'+e+'</div>'; });
 </script>

@@ -7,3 +7,5 @@ boot.js
 data/tagging/
 data/verify/
 data/hooks/
+
+.vercel
