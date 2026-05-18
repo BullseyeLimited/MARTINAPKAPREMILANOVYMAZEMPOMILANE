@@ -283,6 +283,10 @@ function clean(s){
     .replace(/\s{2,}/g," ")
     .trim();
 }
+// Talk titles come from the organiser and may contain dashes; show them with a colon.
+function tclean(s){
+  return (s||"").replace(/\s*[—–]\s*/g,": ").replace(/\s-\s/g,": ").replace(/\s{2,}/g," ").trim();
+}
 function spById(id){ return DATA._spById[id]; }
 function sesById(id){ return DATA._seById[id]; }
 function ph(n){ const d=el("div","ph"); d.textContent=initials(n); return d; }
@@ -311,7 +315,7 @@ function cardEl(s,opts={}){
   const rm=el("div","room");
   rm.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'+esc(s.room||"TBA");
   c.appendChild(rm);
-  const t=el("div","ttl"); t.textContent=s.title; c.appendChild(t);
+  const t=el("div","ttl"); t.textContent=tclean(s.title); c.appendChild(t);
   if(s.speakerIds.length){
     const sp=el("div","spk");
     s.speakerIds.slice(0,3).forEach(id=>{ const p=spById(id); if(!p)return;
@@ -381,7 +385,7 @@ function renderPlan(m){
     if(reco.summary){ const su=el("div","aisum"); su.innerHTML="<b>"+esc(clean(reco.summary))+"</b>"; m.appendChild(su); }
     reco.picks.forEach(p=>{ const s=sesById(p.id); if(!s) return;
       const c=el("div","reco");
-      c.innerHTML='<div class="time" style="margin-bottom:6px">'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"short"})+' '+hm(s.start)+' to '+hm(s.end)+' · <span style="color:var(--acc2)">'+esc(s.room)+'</span></div><div class="ttl">'+esc(s.title)+'</div><div class="why">'+esc(clean(p.reason||""))+'</div>';
+      c.innerHTML='<div class="time" style="margin-bottom:6px">'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"short"})+' '+hm(s.start)+' to '+hm(s.end)+' · <span style="color:var(--acc2)">'+esc(s.room)+'</span></div><div class="ttl">'+esc(tclean(s.title))+'</div><div class="why">'+esc(clean(p.reason||""))+'</div>';
       c.onclick=()=>openSession(s); m.appendChild(c);
     });
     if(reco.closing){ const cl=el("div","aisum");cl.style.marginTop="10px";cl.textContent=clean(reco.closing);m.appendChild(cl); }
@@ -450,7 +454,7 @@ function openSession(s){
   const star=favs.has(s.id), rem=reminders.has(s.id);
   let h='';
   if(s.tags&&s.tags.length) h+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">'+s.tags.map(t=>'<span class="tag">'+esc(t)+'</span>').join('')+'</div>';
-  h+='<h3>'+esc(s.title)+'</h3>';
+  h+='<h3>'+esc(tclean(s.title))+'</h3>';
   h+='<div class="smeta"><div class="m"><b>'+hm(s.start)+' to '+hm(s.end)+'</b></div><div class="m"><b>'+esc(s.room||"TBA")+'</b></div><div class="m">'+asLocal(s.start).toLocaleDateString("en-US",{weekday:"long",day:"numeric",month:"long"})+'</div></div>';
   h+='<div class="actrow">'+
      '<button class="star'+(star?" on":"")+'" id="bStar">'+(star?"Saved":"Save")+'</button>'+
