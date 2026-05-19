@@ -6,6 +6,11 @@
 <meta name="theme-color" content="#05060f" />
 <title>AI WEEK 2026 Live Agenda</title>
 <link rel="preconnect" href="https://cdn-assets.inwink.com" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/icon.svg" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="AI WEEK Live" />
 <style>
   @font-face{font-family:'Hanken';src:url('/fonts/hanken.woff2') format('woff2');font-weight:300 700;font-display:swap}
   @font-face{font-family:'Newsreader';src:url('/fonts/newsreader.woff2') format('woff2');font-weight:400 600;font-display:swap}
@@ -483,7 +488,7 @@ function renderPlan(m){
     });
     const tools=el("div","actrow");tools.style.marginTop="6px";
     const cal=el("button","cal");cal.textContent="Add whole schedule to calendar";
-    cal.onclick=()=>{ sched.forEach(downloadICS); toast("Calendar files downloaded for your schedule"); };
+    cal.onclick=()=>{ downloadICS(sched,"ai-week-schedule"); toast("Schedule downloaded as one calendar file"); };
     tools.appendChild(cal); m.appendChild(tools);
   }
 
@@ -517,6 +522,8 @@ function renderPlan(m){
       m.appendChild(c);
     });
     if(reco.closing){ const cl=el("div","aisum");cl.style.marginTop="10px";cl.textContent=clean(reco.closing);m.appendChild(cl); }
+    if(reco.generatedAt){ const ts=el("div");ts.style.cssText="color:var(--dim);font-size:11.5px;margin:10px 2px 0;line-height:1.5";
+      ts.textContent="Suggested at "+new Date(reco.generatedAt).toLocaleTimeString("en-GB",{timeZone:TZ,hour:"2-digit",minute:"2-digit"})+" Milano. As the day moves on, press Update for now to refresh against the current time."; m.appendChild(ts); }
     const re=el("div","actrow");re.style.marginTop="14px";
     const addAll=el("button","cal");addAll.textContent="Add all suggestions to schedule";
     addAll.onclick=()=>{ reco.picks.forEach(p=>favs.add(p.id)); localStorage.setItem("aiw_fav",JSON.stringify([...favs])); toast("All suggestions added to your schedule"); render(); };
@@ -621,7 +628,7 @@ function openSession(s){
   if(s.speakerIds.length){
     h+='<div class="shead">Speakers ('+s.speakerIds.length+')</div>';
     s.speakerIds.forEach(id=>{ const p=spById(id); if(!p)return;
-      h+='<div class="sp">'+(p.photo?'<img src="'+p.photo+'" loading="lazy" onerror="this.outerHTML=\'<div class=&quot;ph&quot;>'+initials(p.name)+'</div>\'">':'<div class="ph">'+initials(p.name)+'</div>')+
+      h+='<div class="sp">'+(p.photo?'<img src="'+esc(p.photo)+'" loading="lazy" data-in="'+esc(initials(p.name))+'" onerror="this.replaceWith(Object.assign(document.createElement(\'div\'),{className:\'ph\',textContent:this.getAttribute(\'data-in\')}))">':'<div class="ph">'+esc(initials(p.name))+'</div>')+
         '<div style="min-width:0"><div class="nm">'+esc(p.name)+'</div><div class="jt">'+esc([p.title,p.company].filter(Boolean).join(" · "))+'</div>'+
         (p.tags&&p.tags.length?'<div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap">'+p.tags.map(t=>'<span class="tag">'+esc(t)+'</span>').join('')+'</div>':'')+
         (p.bio?'<div class="bio">'+esc(p.bio)+'</div>':'')+
@@ -629,15 +636,15 @@ function openSession(s){
     });
   }
   showSheet(h);
-  $("#bStar").onclick=()=>{ toggle(favs,"aiw_fav",s.id); openSession(s); render(); };
-  $("#bRem").onclick=()=>{ toggleReminder(s); openSession(s); render(); };
+  $("#bStar").onclick=()=>{ toggleSched(s); openSession(s); };
+  $("#bRem").onclick=()=>{ toggleReminder(s); render(); openSession(s); };
   $("#bCal").onclick=()=>showCalendar(s);
 }
 function toggle(set,key,id){ set.has(id)?set.delete(id):set.add(id); localStorage.setItem(key,JSON.stringify([...set])); }
 function toggleReminder(s){
   if(reminders.has(s.id)){ reminders.delete(s.id); toast("Reminder removed"); }
   else { reminders.add(s.id); if("Notification"in window&&Notification.permission==="default")Notification.requestPermission();
-    toast("Reminder set. We will alert you about 10 minutes before."); }
+    toast("Reminder set. It alerts you about 10 minutes before while this app is open. For an alert even when it is closed, also use Add to calendar."); }
   localStorage.setItem("aiw_rem",JSON.stringify([...reminders]));
 }
 
@@ -646,21 +653,27 @@ function icsDate(iso){ // Rome local -> UTC stamp (CEST +02:00 in May)
   const d=new Date(String(iso).replace(/Z$/,"")+"+02:00");
   return d.toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";
 }
-function buildICS(s){
+function veventLines(s){
   const sp=s.speakerIds.map(i=>{const p=spById(i);return p?p.name:"";}).filter(Boolean).join(", ");
-  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//AI WEEK Live//EN","CALSCALE:GREGORIAN","BEGIN:VEVENT",
-    "UID:"+s.id+"@aiweek","DTSTAMP:"+icsDate(romeNow().toISOString()),
+  return ["BEGIN:VEVENT","UID:"+s.id+"@aiweek","DTSTAMP:"+icsDate(romeNow().toISOString()),
     "DTSTART:"+icsDate(s.start),"DTEND:"+icsDate(s.end),
-    "SUMMARY:"+(s.title||"").replace(/[,;\\]/g,"\\$&"),
+    "SUMMARY:"+tclean(s.title||"").replace(/[,;\\]/g,"\\$&"),
     "LOCATION:"+(s.room+", Milano Fiera Rho").replace(/[,;\\]/g,"\\$&"),
-    "DESCRIPTION:"+((sp?"Speakers: "+sp+". ":"")+(s.hook||"")).replace(/[,;\\]/g,"\\$&").slice(0,300),
-    "BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:Upcoming: "+(s.title||"").slice(0,60),"END:VALARM",
-    "END:VEVENT","END:VCALENDAR"].join("\r\n");
+    "DESCRIPTION:"+((sp?"Speakers: "+sp+". ":"")+human(s.hook||"")).replace(/[,;\\]/g,"\\$&").slice(0,300),
+    "BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:Upcoming: "+tclean(s.title||"").slice(0,60),"END:VALARM",
+    "END:VEVENT"];
 }
-function downloadICS(s){
-  const blob=new Blob([buildICS(s)],{type:"text/calendar"});
-  const a=el("a");a.href=URL.createObjectURL(blob);a.download=(s.title||"session").slice(0,40).replace(/[^\w]+/g,"_")+".ics";
-  document.body.appendChild(a);a.click();a.remove();
+function buildICS(list){
+  const arr=Array.isArray(list)?list:[list];
+  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//AI WEEK Live//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH"]
+    .concat(...arr.map(veventLines)).concat(["END:VCALENDAR"]).join("\r\n");
+}
+function downloadICS(list,name){
+  const arr=Array.isArray(list)?list:[list];
+  const blob=new Blob([buildICS(arr)],{type:"text/calendar;charset=utf-8"});
+  const a=el("a");a.href=URL.createObjectURL(blob);
+  a.download=(name|| (arr.length>1?"ai-week-schedule":(tclean(arr[0].title||"session").slice(0,40)))).replace(/[^\w]+/g,"_")+".ics";
+  document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(a.href);},1000);
 }
 function gcalUrl(s){
   const f=i=>icsDate(i);
@@ -846,6 +859,8 @@ fetch("data/aiweek.json").then(r=>r.json()).then(d=>{
   buildChips(); tickClock(); render(); initConsent();
   setInterval(()=>{ tickClock(); checkReminders(); if(view==="now")render(); },30000);
 }).catch(e=>{ $("#splash").innerHTML='<div class="lg">Failed to load data</div><div style="color:var(--mut);font-size:13px;padding:0 20px;text-align:center">'+e+'</div>'; });
+
+if("serviceWorker"in navigator){ window.addEventListener("load",()=>{ navigator.serviceWorker.register("/sw.js").catch(()=>{}); }); }
 </script>
 </body>
 </html>

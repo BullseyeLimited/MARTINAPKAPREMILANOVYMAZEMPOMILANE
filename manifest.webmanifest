@@ -1,0 +1,13 @@
+{
+  "name": "AI WEEK 2026 Live",
+  "short_name": "AI WEEK Live",
+  "description": "Unofficial live agenda and AI concierge for AI WEEK 2026, Milano Fiera Rho.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#05060f",
+  "theme_color": "#05060f",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -30,7 +30,15 @@ function rateLimited(ip) {
 }
 
 function romeToMs(naive) { return new Date(naive.replace(" ", "T") + "+02:00").getTime(); }
-function nowRome(o) { if (o) { const t = new Date(o).getTime(); if (!isNaN(t)) return t; } return Date.now(); }
+function nowRome(o) {
+  if (o) {
+    // treat a bare datetime (no zone) as Europe/Rome wall-clock (CEST +02:00 in May)
+    const s = /[zZ]|[+-]\d{2}:?\d{2}$/.test(o) ? o : o.replace(" ", "T") + "+02:00";
+    const t = new Date(s).getTime();
+    if (!isNaN(t)) return t;
+  }
+  return Date.now();
+}
 function fmt(ms) {
   return new Intl.DateTimeFormat("en-GB", { timeZone: TZ, weekday: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(ms));
 }
